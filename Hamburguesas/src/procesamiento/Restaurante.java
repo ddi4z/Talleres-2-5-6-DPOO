@@ -2,7 +2,7 @@ package procesamiento;
 
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicListUI.ListSelectionHandler;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,16 +14,18 @@ public class Restaurante {
 	public ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
 	public ArrayList<Combo> combos = new ArrayList<Combo>();
 	public ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-	public Pedido pedidoEnCurso = new Pedido("hola","s");
+	public Pedido pedidoEnCurso;
 
 	//Contructor
 	public Restaurante () {}
 	
-	public void iniciarPedido () {
-		System.out.println("Aplicacion");
+	public void iniciarPedido (String nombreCliente, String direccionCliente) {
+		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
 	}
 	public void cerrarYGuardarPedido () {
-		System.out.println("Aplicacion");
+		pedidos.add(pedidoEnCurso);
+		pedidoEnCurso = null;
+		return ;
 	}
 
 
@@ -32,19 +34,26 @@ public class Restaurante {
 	public Pedido getPedidoEnCurso () {
 		return this.pedidoEnCurso;
 	}
-	public ArrayList<Producto> getMenuBase () {
-		return getMenuBase();
+	public ArrayList<ProductoMenu> getMenuBase () {
+		return this.menuBase;
 	}
 	public ArrayList<Ingrediente> getIngredientes () {
-		return getIngredientes();
+		return this.Ingredientes;
 	}
-	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) {
-		System.out.println("Aplicacion");
-	}
-	
-	
-	
+
+
+
 	//Cargar archivos
+	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException {
+		
+		cargarIngredientes(archivoIngredientes);
+		cargarMenu(archivoMenu);
+		cargarCombos(archivoCombos);
+	}
+	
+	
+	
+	
 	private void cargarIngredientes (File archivoIngredientes) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
 		String linea = br.readLine();

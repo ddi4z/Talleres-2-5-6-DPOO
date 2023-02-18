@@ -1,12 +1,14 @@
 package procesamiento;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Pedido {
     private int numeroPedidos;
     private int idPedido;
     private String nombreCliente;
     private String direccionCliente;
+    private ArrayList<Producto> itemsPedido = new ArrayList<Producto>();
 
     public Pedido(String nombreCliente, String direccionCliente){
         this.nombreCliente = nombreCliente;
@@ -17,17 +19,23 @@ public class Pedido {
         return this.idPedido;
     }
     public void agregarProducto(Producto nuevoItem){
-        return ;
+        itemsPedido.add(nuevoItem);
+        numeroPedidos=itemsPedido.size();
     }
 
     private int getPrecioNetoPedido(){
-        return 5;
+        int precio =0;
+        for(int i=0 ; i<itemsPedido.size(); i++){
+            Producto item = itemsPedido.get(i);
+            precio+=item.getPrecio();
+        }
+        return precio;
     }
     private int getPrecioTotalPedido(){
-        return 5;
+        return getPrecioNetoPedido()+getPrecioIVAPedido();
     }
     private int getPrecioIVAPedido(){
-        return 5;
+        return (int)(getPrecioNetoPedido()*0.19);
     }
     private String generarTextoFactura(){
         return "5";

@@ -21,10 +21,15 @@ public class Combo implements Producto{
 
 	@Override
 	public int getPrecio() {
-		return 4;
+		int precio = 0;
+		for( int i=0;i<itemsCombo.size();i++){
+			precio+=itemsCombo.get(i).getPrecio();
+		}
+		return precio;
 	}
 	@Override
 	public String generarTextoFactura() {
+		
 		return "Aplicacion";
 	}
 	@Override
