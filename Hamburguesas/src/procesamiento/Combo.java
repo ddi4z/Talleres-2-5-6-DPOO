@@ -12,7 +12,7 @@ public class Combo implements Producto{
 		this.nombreCombo= nombre;
 		this.descuento=descuento;
 	}
-	public void agregarItemACombo (Producto itemCombo) {
+	public void agregarItemACombo (ProductoMenu itemCombo) {
 		this.itemsCombo.add(itemCombo);
 	}
 
@@ -25,7 +25,7 @@ public class Combo implements Producto{
 		for( int i=0;i<itemsCombo.size();i++){
 			precio+=itemsCombo.get(i).getPrecio();
 		}
-		return precio;
+		return (int) (precio-(precio*descuento));
 	}
 	@Override
 	public String generarTextoFactura() {
