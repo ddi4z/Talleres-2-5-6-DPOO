@@ -109,20 +109,29 @@ public class Restaurante {
 			String bebida = datos[4];
 			Combo combo = new Combo(nombre,descuento);
 
-			for (int i = 0; i < menuBase.size(); i++)
+			boolean forActivo =true;
+			for (int i = 0; i < menuBase.size() && forActivo==true; i++)
 			{
 				if (menuBase.get(i).getNombre().equals(principal))
+					forActivo=false;
 					combo.agregarItemACombo(menuBase.get(i));
 			}
-			for (int i = 0; i < menuBase.size(); i++)
+			forActivo =true;
+			for (int i = 0; i < menuBase.size()&& forActivo==true; i++)
 			{
-				if (menuBase.get(i).getNombre().equals(extra))
+				if (menuBase.get(i).getNombre().equals(extra)){
+					forActivo=false;
 					combo.agregarItemACombo(menuBase.get(i));
+				}
 			}
-			for (int i = 0; i < menuBase.size(); i++)
+			forActivo =true;
+			for (int i = 0; i < menuBase.size()&& forActivo==true; i++)
 			{
-				if (menuBase.get(i).getNombre().equals(bebida))
+				if (menuBase.get(i).getNombre().equals(bebida)){
+					forActivo=false;
 					combo.agregarItemACombo(menuBase.get(i));
+				}
+					
 			}
 			this.combos.add(combo);
 			linea = br.readLine();

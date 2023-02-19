@@ -238,9 +238,12 @@ public class Aplicacion {
 					System.out.println("Ingrese el id a consultar: ");
 					int id = Integer.parseInt(reader.readLine());
 					ArrayList<Pedido> pedidos = restaurante.getPedidos();
-					for (int i=0; i<pedidos.size();i++){
+
+					boolean forActivo=true;
+					for (int i=0; i<pedidos.size() && forActivo==true;i++){
 						
 							if (pedidos.get(i).getIdPedido()== (id)){
+								forActivo=false;
 								File archivo = new File("./Hamburguesas/data/" + id+".txt");
 								try {
 									Desktop.getDesktop().open(archivo);
