@@ -17,6 +17,3 @@ papas medianas;5500
 papas grandes;6900
 papas en casco medianas;5500
 papas en casco grandes;6900
-agua cristal sin gas;5000
-agua cristal con gas;5000
-gaseosa;5000

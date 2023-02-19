@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Restaurante {
 	private ArrayList<Ingrediente> Ingredientes = new ArrayList<Ingrediente>();
 	private ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
+	private ArrayList<Bebida> bebidas = new ArrayList<Bebida>();
 	private ArrayList<Combo> combos = new ArrayList<Combo>();
 	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 	private Pedido pedidoEnCurso;
@@ -41,6 +42,9 @@ public class Restaurante {
 	public Pedido getPedidoEnCurso () {
 		return this.pedidoEnCurso;
 	}
+	public ArrayList<Bebida> getBebidas () {
+		return this.bebidas;
+	}
 	public ArrayList<ProductoMenu> getMenuBase () {
 		return this.menuBase;
 	}
@@ -57,17 +61,36 @@ public class Restaurante {
 
 
 	//Cargar archivos
-	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException {
+	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos, File archivoBebida) throws IOException {
 		
 		cargarIngredientes(archivoIngredientes);
 		cargarMenu(archivoMenu);
 		cargarCombos(archivoCombos);
+		cargarBebidas(archivoBebida);
 	}
 	
 	
+		private void cargarBebidas (File archivoBebida) throws IOException {
 	
 	
-	private void cargarIngredientes (File archivoIngredientes) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(archivoBebida));
+		String linea = br.readLine();
+		while (linea!=null){
+			String[] informacionLinea = linea.split(";"); 
+			String nombre = informacionLinea[0]; 
+			int precio = Integer.parseInt(informacionLinea[1]);
+			Bebida bebida = new Bebida(nombre,precio);
+			
+			this.bebidas.add(bebida);
+			linea = br.readLine();
+		}
+		br.close();
+		}
+
+
+
+
+		private void cargarIngredientes (File archivoIngredientes) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
 		String linea = br.readLine();
 		
@@ -83,7 +106,7 @@ public class Restaurante {
 			linea = br.readLine();
 		}
 		br.close();
-	}
+		}
 	private void cargarMenu (File archivoMenu) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoMenu));
 		String linea = br.readLine();
@@ -96,7 +119,7 @@ public class Restaurante {
 			linea = br.readLine();
 		}
 		br.close();
-	}
+		}
 	private void cargarCombos(File archivoCombos) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoCombos));
 		String linea = br.readLine();

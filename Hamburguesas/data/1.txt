@@ -1,45 +1,39 @@
-nombre: DAN
-direccion: kRA 8
-valor neto: 99050
-valor IVA: 18819
-valor total: 117869
+nombre: Dan
+direccion: 342
+valor neto: 65550
+valor IVA: 12454
+valor total: 78004
+
+----------------------------------
+nombre: ajustadoagua cristal sin gas
+
+Ingredientes añadidos:
+nombre: lechuga valor: 1000
+
+Ingredientes eliminados:
+nombre: lechuga valor: 0
+
+----------------------------------
+nombre: ajustadocorral
+
+Ingredientes añadidos:
+
+Ingredientes eliminados:
+nombre: lechuga valor: 0
+
+----------------------------------
+nombre: ajustadocorral
+
+Ingredientes añadidos:
+
+Ingredientes eliminados:
+nombre: lechuga valor: 0
 
 ----------------------------------
 nombre: combo corral
-Precio Total: 22050
+Precio Total: 17550
 corral
 papas medianas
-gaseosa
 
 ----------------------------------
-nombre: corral queso precioBase: 16000
-
-----------------------------------
-nombre: corral queso precioBase: 16000
-
-----------------------------------
-nombre: ajustadocorral
-
-Ingredientes añadidos:
-nombre: lechuga valor: 1000
-
-Ingredientes eliminados:
-nombre: lechuga valor: 0
-
-----------------------------------
-nombre: ajustadocorral
-
-Ingredientes añadidos:
-nombre: lechuga valor: 1000
-
-Ingredientes eliminados:
-nombre: lechuga valor: 0
-
-----------------------------------
-nombre: ajustadocorral
-
-Ingredientes añadidos:
-nombre: lechuga valor: 1000
-
-Ingredientes eliminados:
-nombre: lechuga valor: 0
+nombre: corral precioBase: 14000
