@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.awt.Desktop;
 
 import procesamiento.Ingrediente;
 import procesamiento.Pedido;
@@ -29,8 +30,9 @@ public class Aplicacion {
 		System.out.println("5. Cerrar y guardar pedido");
 		System.out.println("6. Iniciar pedido");
 		System.out.println("7. Modificar pedido actual");
-		System.out.println("8. Salir de aplicacion");
-	}
+		System.out.println("8. Buscar por ID");
+		System.out.println("9. Salir de aplicacion");
+		}
 	public void ejecutarOpcion () {
 		System.out.println("Aplicacion restuarantes\n");
 
@@ -231,9 +233,26 @@ public class Aplicacion {
 
 				}
 			}
+				else if (opcion_seleccionada == 8){
+					
+					System.out.println("Ingrese el id a consultar: ");
+					int id = Integer.parseInt(reader.readLine());
+					ArrayList<Pedido> pedidos = restaurante.getPedidos();
+					for (int i=0; i<pedidos.size();i++){
+						
+							if (pedidos.get(i).getIdPedido()== (id)){
+								File archivo = new File("./Hamburguesas/data/" + id+".txt");
+								try {
+									Desktop.getDesktop().open(archivo);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+					}
 
+				}
 
-				else if (opcion_seleccionada == 8)
+				else if (opcion_seleccionada == 9)
 				{
 					System.out.println("Saliendo de la Aplicacion ...");
 					continuar = false;

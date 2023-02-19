@@ -47,6 +47,9 @@ public class Restaurante {
 	public ArrayList<Combo> getCombos () {
 		return this.combos;
 	}
+	public ArrayList<Pedido> getPedidos () {
+		return this.pedidos;
+	}
 	public ArrayList<Ingrediente> getIngredientes () {
 		return this.Ingredientes;
 	}
