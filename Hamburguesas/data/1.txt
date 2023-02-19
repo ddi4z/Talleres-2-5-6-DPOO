@@ -1,0 +1,12 @@
+nombre: D
+direccion: 2
+valor neto: 32085
+valor IVA: 6096
+valor total: 38181
+
+----------------------------------
+nombre: combo especial
+Precio Total: 32085
+especial
+papas medianas
+gaseosa

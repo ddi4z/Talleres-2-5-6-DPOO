@@ -1,7 +1,7 @@
 package procesamiento;
 
 import java.util.ArrayList;
-import java.util.Base64;
+
 
 public class ProductoAjustado implements Producto{
 	private ProductoMenu base;
@@ -12,7 +12,15 @@ public class ProductoAjustado implements Producto{
 	
 	public ProductoAjustado (ProductoMenu base) {
 		this.base=base;
+
 	}
+	public void agregarIngrediente(Ingrediente nuevoItem){
+        agregados.add(nuevoItem);
+    }
+	public void eliminarIngrediente(Ingrediente nuevoItem){
+        eliminados.add(nuevoItem);
+        
+    }
 	@Override
 	public String getNombre () {
 		return base.getNombre();
@@ -28,6 +36,20 @@ public class ProductoAjustado implements Producto{
 	}
 	@Override
 	public String generarTextoFactura () {
-		return "Aplicacion";
+		StringBuilder sb = new StringBuilder();
+        sb.append("\n----------------------------------");
+		sb.append("\nnombre: "+"ajustado"+base.getNombre());
+		sb.append("\n\nIngredientes añadidos:");
+		for (int i = 0; i<agregados.size() ;i++){
+            sb.append("\nnombre: "+ agregados.get(i).getNombre()+" valor: "+ agregados.get(i).getCostoAdicional());
+            }
+		sb.append("\n\nIngredientes eliminados:");
+		for (int i = 0; i<eliminados.size() ;i++){
+			sb.append("\nnombre: "+ eliminados.get(i).getNombre()+" valor: "+ 0);
+			}
+
+		
+		return sb.toString();
+		
 	}
 }

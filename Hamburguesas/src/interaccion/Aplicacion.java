@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import procesamiento.Ingrediente;
 import procesamiento.Pedido;
 import procesamiento.ProductoMenu;
+import procesamiento.ProductoAjustado;
+import procesamiento.Combo;
 import procesamiento.Restaurante;
 
 public class Aplicacion {
+	private Restaurante restaurante = new Restaurante();
+	
 	public static void main (String[] args) {
 		Aplicacion consola = new Aplicacion();
 		consola.ejecutarOpcion();
@@ -24,7 +28,8 @@ public class Aplicacion {
 		System.out.println("4. Consultar pedido en curso");
 		System.out.println("5. Cerrar y guardar pedido");
 		System.out.println("6. Iniciar pedido");
-		System.out.println("7. Salir de aplicacion");
+		System.out.println("7. Modificar pedido actual");
+		System.out.println("8. Salir de aplicacion");
 	}
 	public void ejecutarOpcion () {
 		System.out.println("Aplicacion restuarantes\n");
@@ -35,70 +40,200 @@ public class Aplicacion {
 			try
 			{
 				mostrarMenu();
-				Restaurante restaurante = new Restaurante();
+				
 				System.out.print("Por favor seleccione una opción" + ": ");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				int opcion_seleccionada = Integer.parseInt(reader.readLine());
-				reader.close();
+
 				if (opcion_seleccionada == 1){
 
 					System.out.println("\n" + "Cargar archivos del Restaurante" + "\n");
 			
-					File archivoMenu = new File("/Hamburguesas/data/menu.txt");
-					File archivoIngrediente = new File("/Hamburguesas/data/ingredientes.txt");
-					File archivoCombo = new File("/Hamburguesas/data/combos.txt");
+					File archivoMenu = new File("./Hamburguesas/data/menu.txt");
+					File archivoIngrediente = new File("./Hamburguesas/data/ingredientes.txt");
+					File archivoCombo = new File("./Hamburguesas/data/combos.txt");
 					
-					restaurante.cargarInformacionRestaurante(archivoMenu,archivoIngrediente,archivoCombo);
+					restaurante.cargarInformacionRestaurante(archivoIngrediente,archivoMenu,archivoCombo);
+					
 					System.out.println("Se cargó el archivo " + archivoMenu + " con información de los menus.");
 					System.out.println("Se cargó el archivo " + archivoIngrediente + " con información de los ingredientes.");
 					System.out.println("Se cargó el archivo " + archivoCombo + " con información de los combos.");
-
+					
 					
 			
 				}
 
-				else if (opcion_seleccionada == 2 && restaurante != null){
+				else if (opcion_seleccionada == 2){
 					System.out.println("\n" + "Ingredientes" + "\n");
 					ArrayList<Ingrediente> Ingredientes = restaurante.getIngredientes();
 					System.out.println("Los ingredientes son: ");
-					Ingredientes.forEach((ingrediente) -> System.out.println(ingrediente));
+				
+					for (int i=0;i<Ingredientes.size();i++){
+						System.out.print(i+1);
+						System.out.print(") ");
+						System.out.println(Ingredientes.get(i).getNombre());
+					}
 				}
-				else if (opcion_seleccionada == 3 && restaurante != null){
+				else if (opcion_seleccionada == 3){
 					System.out.println("\n" + "Menu base" + "\n");
 					ArrayList<ProductoMenu> menuBase = restaurante.getMenuBase();
 					System.out.println("Los elementos en el menu son: ");
-					menuBase.forEach((elementoMenu) -> System.out.println(elementoMenu));
+					for (int i=0;i<menuBase.size();i++){
+						System.out.print(i+1);
+						System.out.print(") ");
+						System.out.println(menuBase.get(i).getNombre());
+					}
 				}
-				else if (opcion_seleccionada == 4 && restaurante != null)
+
+
+
+
+
+
+
+
+
+
+
+
+
+				else if (opcion_seleccionada == 4)
 				{
 					System.out.println("\n" + "Pedido en curso" + "\n");
 					Pedido pedidoEnCurso = restaurante.getPedidoEnCurso();
-					System.out.println("El pedido en curso es: "+ pedidoEnCurso);
+					System.out.println("El pedido en curso es: "+ pedidoEnCurso.getIdPedido());
+					
+
 				}
-				else if (opcion_seleccionada == 5 && restaurante != null)
+				else if (opcion_seleccionada == 5)
 				{
 					System.out.println("\n" + "Cerrar y guardar pedido" + "\n");
 					restaurante.cerrarYGuardarPedido();
 					System.out.println("Se ha cerrado y guardado el pedido");
 				}
-				else if (opcion_seleccionada == 6 && restaurante != null)
+				else if (opcion_seleccionada == 6)
 				{
 					System.out.println("\n" + "Iniciar pedido" + "\n");
 					
 					System.out.print("Por favor digite el nombre del cliente" + ": ");
-					BufferedReader nc = new BufferedReader(new InputStreamReader(System.in));
-					String nombreCliente = nc.readLine();
-					nc.close();
+					String nombreCliente = reader.readLine();
+					
 
 					System.out.print("Por favor digite la direccion del cliente");
-					BufferedReader dc = new BufferedReader(new InputStreamReader(System.in));
-					String direccionCliente = dc.readLine();
-					dc.close();
+					String direccionCliente = reader.readLine();
+					
 					restaurante.iniciarPedido(nombreCliente, direccionCliente);
+					
+					
+
+
+
+
 					System.out.println("Se ha iniciado el pedido para el cliente: "+ nombreCliente);
 				}
 
+
 				else if (opcion_seleccionada == 7)
+				{
+					Pedido pedidoEnCurso = restaurante.getPedidoEnCurso();
+					boolean activo=true;
+						
+					while (activo==true){
+						System.out.println("Seleccione una opcion: ");
+						System.out.println("1: Combo ");
+						System.out.println("2: producto menu");
+						System.out.println("3: Producto ajustado");
+						System.out.println("4: Salir");
+						int opcion_pedido = Integer.parseInt(reader.readLine());
+
+						if (opcion_pedido==1){
+							ArrayList<Combo> combos = restaurante.getCombos();
+							for (int i=0;i<combos.size();i++){
+								System.out.print(i+1);
+								System.out.print(") ");
+								System.out.println(combos.get(i).getNombre());
+							}
+							
+							int comboIndex = Integer.parseInt(reader.readLine());
+							Combo combo = restaurante.getCombos().get(comboIndex-1);
+							
+							pedidoEnCurso.agregarProducto(combo);
+						}
+						else if (opcion_pedido==2){
+							ArrayList<ProductoMenu> menus = restaurante.getMenuBase();
+							for (int i=0;i<menus.size();i++){
+								System.out.print(i+1);
+								System.out.print(") ");
+								System.out.println(menus.get(i).getNombre());
+							}
+							int productoIndex = Integer.parseInt(reader.readLine());
+							ProductoMenu producto = restaurante.getMenuBase().get(productoIndex-1);
+							pedidoEnCurso.agregarProducto(producto);
+						}
+						else if (opcion_pedido==3){
+							ArrayList<ProductoMenu> menus = restaurante.getMenuBase();
+							for (int i=0;i<menus.size();i++){
+								System.out.print(i+1);
+								System.out.print(") ");
+								System.out.println(menus.get(i).getNombre());
+							}
+							int productoIndex = Integer.parseInt(reader.readLine());
+							ProductoMenu productoBase = restaurante.getMenuBase().get(productoIndex-1);
+							ProductoAjustado productoAjuste = new ProductoAjustado(productoBase);
+							
+							
+							boolean activoAjustes=true;
+							while (activoAjustes==true){
+
+								
+								System.out.println("Seleccione una opcion: ");
+								System.out.println("1: Añadir ");
+								System.out.println("2: Quitar");
+								System.out.println("3: Salir");
+
+
+								int opcionAjuste = Integer.parseInt(reader.readLine());
+								if (opcionAjuste==1){
+									ArrayList<Ingrediente> ingredientes = restaurante.getIngredientes();
+									for (int i=0;i<ingredientes.size();i++){
+										System.out.print(i+1);
+										System.out.print(") ");
+										System.out.println(ingredientes.get(i).getNombre());
+									}
+									int IngredienteIndex = Integer.parseInt(reader.readLine());
+									Ingrediente ingrediente = restaurante.getIngredientes().get(IngredienteIndex-1);
+									productoAjuste.agregarIngrediente(ingrediente);
+									
+								}
+								else if (opcionAjuste==2){
+									ArrayList<Ingrediente> ingredientes = restaurante.getIngredientes();
+									for (int i=0;i<ingredientes.size();i++){
+										System.out.print(i+1);
+										System.out.print(") ");
+										System.out.println(ingredientes.get(i).getNombre());
+									}
+									int IngredienteIndex = Integer.parseInt(reader.readLine());
+									Ingrediente ingrediente = restaurante.getIngredientes().get(IngredienteIndex-1);
+									productoAjuste.eliminarIngrediente(ingrediente);
+								}
+								else if (opcion_pedido==3) activoAjustes=false;
+							pedidoEnCurso.agregarProducto(productoAjuste);
+							}
+							
+
+							
+						}
+
+						else if (opcion_pedido==4) activo=false;
+
+
+					
+
+				}
+			}
+
+
+				else if (opcion_seleccionada == 8)
 				{
 					System.out.println("Saliendo de la Aplicacion ...");
 					continuar = false;

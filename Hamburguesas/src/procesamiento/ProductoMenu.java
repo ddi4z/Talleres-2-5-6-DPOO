@@ -18,6 +18,9 @@ public class ProductoMenu implements Producto{
 	}
 	@Override
 	public String generarTextoFactura() {
-		return "Aplicacion";
+		
+		
+		
+		return "\n----------------------------------"+ "\nnombre: "+nombre+" precioBase: "+precioBase;
 	}
 }

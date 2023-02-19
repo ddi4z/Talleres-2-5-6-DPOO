@@ -3,29 +3,36 @@ package procesamiento;
 import java.util.ArrayList;
 
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Restaurante {
-	public ArrayList<Ingrediente> Ingredientes = new ArrayList<Ingrediente>();
-	public ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
-	public ArrayList<Combo> combos = new ArrayList<Combo>();
-	public ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-	public Pedido pedidoEnCurso;
+	private ArrayList<Ingrediente> Ingredientes = new ArrayList<Ingrediente>();
+	private ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
+	private ArrayList<Combo> combos = new ArrayList<Combo>();
+	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+	private Pedido pedidoEnCurso;
 
 	//Contructor
 	public Restaurante () {}
 	
 	public void iniciarPedido (String nombreCliente, String direccionCliente) {
 		pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
+
+
 	}
-	public void cerrarYGuardarPedido () {
+	public void cerrarYGuardarPedido ()  throws IOException{
+		File archivoAGuardar = new File("./Hamburguesas/data/" + pedidoEnCurso.getIdPedido()+".txt");
+		
+		
+		pedidoEnCurso.guardarFactura(archivoAGuardar);
+
+		
 		pedidos.add(pedidoEnCurso);
 		pedidoEnCurso = null;
-		return ;
+		
 	}
 
 
@@ -36,6 +43,9 @@ public class Restaurante {
 	}
 	public ArrayList<ProductoMenu> getMenuBase () {
 		return this.menuBase;
+	}
+	public ArrayList<Combo> getCombos () {
+		return this.combos;
 	}
 	public ArrayList<Ingrediente> getIngredientes () {
 		return this.Ingredientes;
@@ -57,9 +67,15 @@ public class Restaurante {
 	private void cargarIngredientes (File archivoIngredientes) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
 		String linea = br.readLine();
+		
+		
+		
 		while (linea!=null){
-
-			Ingrediente ingrediente = new Ingrediente("hola",5);
+			String[] informacionLinea = linea.split(";"); 
+			String nombre = informacionLinea[0]; 
+			int precio = Integer.parseInt(informacionLinea[1]);
+			Ingrediente ingrediente = new Ingrediente(nombre,precio);
+			
 			this.Ingredientes.add(ingrediente);
 			linea = br.readLine();
 		}
@@ -69,8 +85,10 @@ public class Restaurante {
 		BufferedReader br = new BufferedReader(new FileReader(archivoMenu));
 		String linea = br.readLine();
 		while (linea!=null){
-
-			ProductoMenu productoMenu = new ProductoMenu("hola",5);
+			String[] informacionLinea = linea.split(";"); 
+			String nombre = informacionLinea[0]; 
+			int precio = Integer.parseInt(informacionLinea[1]);
+			ProductoMenu productoMenu = new ProductoMenu(nombre,precio);
 			this.menuBase.add(productoMenu);
 			linea = br.readLine();
 		}
@@ -80,8 +98,29 @@ public class Restaurante {
 		BufferedReader br = new BufferedReader(new FileReader(archivoCombos));
 		String linea = br.readLine();
 		while (linea!=null){
+			String[] datos = linea.split(";");
+			String nombre = datos[0];
+			int descuento = Integer.parseInt(datos[1].replaceAll("%", ""));
+			String principal = datos[2];
+			String extra = datos[3];
+			String bebida = datos[4];
+			Combo combo = new Combo(nombre,descuento);
 
-			Combo combo = new Combo("hola",5);
+			for (int i = 0; i < menuBase.size(); i++)
+			{
+				if (menuBase.get(i).getNombre().equals(principal))
+					combo.agregarItemACombo(menuBase.get(i));
+			}
+			for (int i = 0; i < menuBase.size(); i++)
+			{
+				if (menuBase.get(i).getNombre().equals(extra))
+					combo.agregarItemACombo(menuBase.get(i));
+			}
+			for (int i = 0; i < menuBase.size(); i++)
+			{
+				if (menuBase.get(i).getNombre().equals(bebida))
+					combo.agregarItemACombo(menuBase.get(i));
+			}
 			this.combos.add(combo);
 			linea = br.readLine();
 		}
