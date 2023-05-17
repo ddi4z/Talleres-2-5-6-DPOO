@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 
 public class ProductoAjustado implements Producto{
-	private Producto base;
+	private ProductoMenu base;
 	private ArrayList<Ingrediente> agregados = new ArrayList<Ingrediente>();
 	private ArrayList<Ingrediente> eliminados = new ArrayList<Ingrediente>();
 	
 	
 	
-	public ProductoAjustado (Producto base) {
+	public ProductoAjustado (ProductoMenu base) {
 		this.base=base;
 
 	}

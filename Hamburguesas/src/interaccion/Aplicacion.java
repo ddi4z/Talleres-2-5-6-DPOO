@@ -5,10 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import excepciones.IngredienteRepetidoException;
+import excepciones.ProductoRepetidoException;
+
 import java.awt.Desktop;
 
 import procesamiento.Ingrediente;
-import procesamiento.Bebida;
 import procesamiento.Pedido;
 import procesamiento.ProductoMenu;
 import procesamiento.ProductoAjustado;
@@ -18,7 +21,7 @@ import procesamiento.Restaurante;
 public class Aplicacion {
 	private Restaurante restaurante = new Restaurante();
 	
-	public static void main (String[] args) {
+	public static void main (String[] args) throws IngredienteRepetidoException, ProductoRepetidoException {
 		Aplicacion consola = new Aplicacion();
 		consola.ejecutarOpcion();
 	}
@@ -34,7 +37,7 @@ public class Aplicacion {
 		System.out.println("8. Buscar por ID");
 		System.out.println("9. Salir de aplicacion");
 		}
-	public void ejecutarOpcion () {
+	public void ejecutarOpcion () throws IngredienteRepetidoException, ProductoRepetidoException {
 		System.out.println("Aplicacion restuarantes\n");
 
 		boolean continuar = true;
@@ -55,14 +58,13 @@ public class Aplicacion {
 					File archivoMenu = new File("./Hamburguesas/data/menu.txt");
 					File archivoIngrediente = new File("./Hamburguesas/data/ingredientes.txt");
 					File archivoCombo = new File("./Hamburguesas/data/combos.txt");
-					File archivoBebida = new File("./Hamburguesas/data/bebidas.txt");
 					
-					restaurante.cargarInformacionRestaurante(archivoIngrediente,archivoMenu,archivoCombo,archivoBebida);
+					restaurante.cargarInformacionRestaurante(archivoIngrediente,archivoMenu,archivoCombo);
 					
 					System.out.println("Se cargó el archivo " + archivoMenu + " con información de los menus.");
 					System.out.println("Se cargó el archivo " + archivoIngrediente + " con información de los ingredientes.");
 					System.out.println("Se cargó el archivo " + archivoCombo + " con información de los combos.");
-					System.out.println("Se cargó el archivo " + archivoBebida + " con información de las bebidas.");
+					
 					
 			
 				}
@@ -146,10 +148,8 @@ public class Aplicacion {
 						System.out.println("Seleccione una opcion: ");
 						System.out.println("1: Combo ");
 						System.out.println("2: producto menu");
-						System.out.println("3: bebidas menu");
-						System.out.println("4: bebidas ajustadas");
-						System.out.println("5: Producto ajustado");
-						System.out.println("6: Salir");
+						System.out.println("3: Producto ajustado");
+						System.out.println("4: Salir");
 						int opcion_pedido = Integer.parseInt(reader.readLine());
 
 						if (opcion_pedido==1){
@@ -177,72 +177,6 @@ public class Aplicacion {
 							pedidoEnCurso.agregarProducto(producto);
 						}
 						else if (opcion_pedido==3){
-							ArrayList<Bebida> bebidas = restaurante.getBebidas();
-							for (int i=0;i<bebidas.size();i++){
-								System.out.print(i+1);
-								System.out.print(") ");
-								System.out.println(bebidas.get(i).getNombre());
-							}
-							int productoIndex = Integer.parseInt(reader.readLine());
-							Bebida producto = restaurante.getBebidas().get(productoIndex-1);
-							pedidoEnCurso.agregarProducto(producto);
-						}
-						else if (opcion_pedido==4){
-							ArrayList<Bebida> bebidas = restaurante.getBebidas();
-							for (int i=0;i<bebidas.size();i++){
-								System.out.print(i+1);
-								System.out.print(") ");
-								System.out.println(bebidas.get(i).getNombre());
-							}
-							int productoIndex = Integer.parseInt(reader.readLine());
-							Bebida productoBase = restaurante.getBebidas().get(productoIndex-1);
-							ProductoAjustado productoAjuste = new ProductoAjustado(productoBase);
-							
-							
-							boolean activoAjustes=true;
-							while (activoAjustes==true){
-
-								
-								System.out.println("Seleccione una opcion: ");
-								System.out.println("1: Añadir ");
-								System.out.println("2: Quitar");
-								System.out.println("3: Salir");
-
-
-								int opcionAjuste = Integer.parseInt(reader.readLine());
-								if (opcionAjuste==1){
-									ArrayList<Ingrediente> ingredientes = restaurante.getIngredientes();
-									for (int i=0;i<ingredientes.size();i++){
-										System.out.print(i+1);
-										System.out.print(") ");
-										System.out.println(ingredientes.get(i).getNombre());
-									}
-									int IngredienteIndex = Integer.parseInt(reader.readLine());
-									Ingrediente ingrediente = restaurante.getIngredientes().get(IngredienteIndex-1);
-									productoAjuste.agregarIngrediente(ingrediente);
-									
-								}
-								else if (opcionAjuste==2){
-									ArrayList<Ingrediente> ingredientes = restaurante.getIngredientes();
-									for (int i=0;i<ingredientes.size();i++){
-										System.out.print(i+1);
-										System.out.print(") ");
-										System.out.println(ingredientes.get(i).getNombre());
-									}
-									int IngredienteIndex = Integer.parseInt(reader.readLine());
-									Ingrediente ingrediente = restaurante.getIngredientes().get(IngredienteIndex-1);
-									productoAjuste.eliminarIngrediente(ingrediente);
-								}
-								else if (opcionAjuste==3) 
-								{activoAjustes=false;
-							pedidoEnCurso.agregarProducto(productoAjuste);
-							}
-						}
-
-
-
-						}
-						else if (opcion_pedido==5){
 							ArrayList<ProductoMenu> menus = restaurante.getMenuBase();
 							for (int i=0;i<menus.size();i++){
 								System.out.print(i+1);
@@ -288,7 +222,7 @@ public class Aplicacion {
 									Ingrediente ingrediente = restaurante.getIngredientes().get(IngredienteIndex-1);
 									productoAjuste.eliminarIngrediente(ingrediente);
 								}
-								else if (opcionAjuste==3) activoAjustes=false;
+								else if (opcion_pedido==3) activoAjustes=false;
 							pedidoEnCurso.agregarProducto(productoAjuste);
 							}
 							
@@ -296,7 +230,7 @@ public class Aplicacion {
 							
 						}
 
-						else if (opcion_pedido==6) activo=false;
+						else if (opcion_pedido==4) activo=false;
 
 
 					
