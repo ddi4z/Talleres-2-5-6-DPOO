@@ -5,6 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+<<<<<<< HEAD:Taller 2/Hamburguesas/src/interaccion/Aplicacion.java
+=======
+
+import excepciones.IngredienteRepetidoException;
+import excepciones.ProductoRepetidoException;
+
+>>>>>>> ae8071bffbc040e4367296b9e22068dc45fe71ee:Hamburguesas/src/interaccion/Aplicacion.java
 import java.awt.Desktop;
 
 import procesamiento.Ingrediente;
@@ -17,7 +24,11 @@ import procesamiento.Restaurante;
 public class Aplicacion {
 	private Restaurante restaurante = new Restaurante();
 	
+<<<<<<< HEAD:Taller 2/Hamburguesas/src/interaccion/Aplicacion.java
 	public static void main (String[] args) {
+=======
+	public static void main (String[] args) throws IngredienteRepetidoException, ProductoRepetidoException {
+>>>>>>> ae8071bffbc040e4367296b9e22068dc45fe71ee:Hamburguesas/src/interaccion/Aplicacion.java
 		Aplicacion consola = new Aplicacion();
 		consola.ejecutarOpcion();
 	}
@@ -33,7 +44,11 @@ public class Aplicacion {
 		System.out.println("8. Buscar por ID");
 		System.out.println("9. Salir de aplicacion");
 		}
+<<<<<<< HEAD:Taller 2/Hamburguesas/src/interaccion/Aplicacion.java
 	public void ejecutarOpcion () {
+=======
+	public void ejecutarOpcion () throws IngredienteRepetidoException, ProductoRepetidoException {
+>>>>>>> ae8071bffbc040e4367296b9e22068dc45fe71ee:Hamburguesas/src/interaccion/Aplicacion.java
 		System.out.println("Aplicacion restuarantes\n");
 
 		boolean continuar = true;

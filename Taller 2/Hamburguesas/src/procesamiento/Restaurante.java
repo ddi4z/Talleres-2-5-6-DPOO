@@ -2,6 +2,8 @@ package procesamiento;
 
 import java.util.ArrayList;
 
+import excepciones.IngredienteRepetidoException;
+import excepciones.ProductoRepetidoException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,7 +59,7 @@ public class Restaurante {
 
 
 	//Cargar archivos
-	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException {
+	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException, IngredienteRepetidoException, ProductoRepetidoException {
 		
 		cargarIngredientes(archivoIngredientes);
 		cargarMenu(archivoMenu);
@@ -67,35 +69,51 @@ public class Restaurante {
 	
 	
 	
-	private void cargarIngredientes (File archivoIngredientes) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
-		String linea = br.readLine();
-		
-		
-		
-		while (linea!=null){
-			String[] informacionLinea = linea.split(";"); 
-			String nombre = informacionLinea[0]; 
-			int precio = Integer.parseInt(informacionLinea[1]);
-			Ingrediente ingrediente = new Ingrediente(nombre,precio);
-			
-			this.Ingredientes.add(ingrediente);
-			linea = br.readLine();
+	private void cargarIngredientes (File archivoIngredientes) throws IngredienteRepetidoException, IOException {
+		try (BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes))) {
+			String linea = br.readLine();
+			while (linea!=null){
+				String[] informacionLinea = linea.split(";"); 
+				String nombre = informacionLinea[0]; 
+				int precio = Integer.parseInt(informacionLinea[1]);
+				Ingrediente ingrediente = new Ingrediente(nombre,precio);
+				
+				if (this.Ingredientes.contains(ingrediente)) {
+					throw new IngredienteRepetidoException(ingrediente);
+				}
+				this.Ingredientes.add(ingrediente);
+				linea = br.readLine();
+			}
+			br.close();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		br.close();
 	}
-	private void cargarMenu (File archivoMenu) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(archivoMenu));
-		String linea = br.readLine();
-		while (linea!=null){
-			String[] informacionLinea = linea.split(";"); 
-			String nombre = informacionLinea[0]; 
-			int precio = Integer.parseInt(informacionLinea[1]);
-			ProductoMenu productoMenu = new ProductoMenu(nombre,precio);
-			this.menuBase.add(productoMenu);
-			linea = br.readLine();
+	private void cargarMenu (File archivoMenu) throws IOException, ProductoRepetidoException {
+		try (BufferedReader br = new BufferedReader(new FileReader(archivoMenu))) {
+			String linea = br.readLine();
+			while (linea!=null){
+				String[] informacionLinea = linea.split(";"); 
+				String nombre = informacionLinea[0]; 
+				int precio = Integer.parseInt(informacionLinea[1]);
+				ProductoMenu productoMenu = new ProductoMenu(nombre,precio);
+
+				if (this.menuBase.contains(productoMenu)){
+					throw new ProductoRepetidoException(productoMenu);
+				}
+
+
+				this.menuBase.add(productoMenu);
+				linea = br.readLine();
+			}
+			br.close();
+		} 
+		catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 		}
-		br.close();
 	}
 	private void cargarCombos(File archivoCombos) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoCombos));
