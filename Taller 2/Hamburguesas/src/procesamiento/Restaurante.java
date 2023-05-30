@@ -13,6 +13,7 @@ import java.io.IOException;
 public class Restaurante {
 	private ArrayList<Ingrediente> Ingredientes = new ArrayList<Ingrediente>();
 	private ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
+	private ArrayList<Bebida> bebidas = new ArrayList<Bebida>();
 	private ArrayList<Combo> combos = new ArrayList<Combo>();
 	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 	private Pedido pedidoEnCurso;
@@ -26,7 +27,7 @@ public class Restaurante {
 
 	}
 	public void cerrarYGuardarPedido ()  throws IOException{
-		File archivoAGuardar = new File("./Hamburguesas/data/" + pedidoEnCurso.getIdPedido()+".txt");
+		File archivoAGuardar = new File("./Taller 6/data/" + pedidoEnCurso.getIdPedido()+".txt");
 		
 		
 		pedidoEnCurso.guardarFactura(archivoAGuardar);
@@ -42,6 +43,9 @@ public class Restaurante {
 	//Getters
 	public Pedido getPedidoEnCurso () {
 		return this.pedidoEnCurso;
+	}
+	public ArrayList<Bebida> getBebidas () {
+		return this.bebidas;
 	}
 	public ArrayList<ProductoMenu> getMenuBase () {
 		return this.menuBase;
@@ -59,37 +63,58 @@ public class Restaurante {
 
 
 	//Cargar archivos
-	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException, IngredienteRepetidoException, ProductoRepetidoException {
+	public void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos,File archivoBebida) throws IOException, IngredienteRepetidoException, ProductoRepetidoException {
 		
 		cargarIngredientes(archivoIngredientes);
 		cargarMenu(archivoMenu);
 		cargarCombos(archivoCombos);
+		cargarBebidas(archivoBebida);
 	}
 	
 	
+	private void cargarBebidas (File archivoBebida) throws IOException {
 	
 	
-	private void cargarIngredientes (File archivoIngredientes) throws IngredienteRepetidoException, IOException {
+		BufferedReader br = new BufferedReader(new FileReader(archivoBebida));
+		String linea = br.readLine();
+		
+		while (linea!=null){
+			String[] informacionLinea = linea.split(";"); 
+			String nombre = informacionLinea[0]; 
+			int precio = Integer.parseInt(informacionLinea[1]);
+			Bebida bebida = new Bebida(nombre,precio);
+			
+			this.bebidas.add(bebida);
+			linea = br.readLine();
+		}
+		br.close();
+	}
+	
+	private void cargarIngredientes (File archivoIngredientes) throws IOException, IngredienteRepetidoException{
 		try (BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes))) {
 			String linea = br.readLine();
+			
 			while (linea!=null){
 				String[] informacionLinea = linea.split(";"); 
 				String nombre = informacionLinea[0]; 
 				int precio = Integer.parseInt(informacionLinea[1]);
 				Ingrediente ingrediente = new Ingrediente(nombre,precio);
-				
-				if (this.Ingredientes.contains(ingrediente)) {
-					throw new IngredienteRepetidoException(ingrediente);
+				for (Ingrediente ingredienteEnRevision: this.Ingredientes){
+				if (ingredienteEnRevision.getNombre().equals(ingrediente.getNombre())) {
+						throw new IngredienteRepetidoException(ingrediente.getNombre());
+				}
 				}
 				this.Ingredientes.add(ingrediente);
 				linea = br.readLine();
-			}
-			br.close();
+				}
+				br.close();
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-	}
+		
+}
+	
 	private void cargarMenu (File archivoMenu) throws IOException, ProductoRepetidoException {
 		try (BufferedReader br = new BufferedReader(new FileReader(archivoMenu))) {
 			String linea = br.readLine();
@@ -98,19 +123,18 @@ public class Restaurante {
 				String nombre = informacionLinea[0]; 
 				int precio = Integer.parseInt(informacionLinea[1]);
 				ProductoMenu productoMenu = new ProductoMenu(nombre,precio);
-
-				if (this.menuBase.contains(productoMenu)){
-					throw new ProductoRepetidoException(productoMenu);
+				for (ProductoMenu producto : this.menuBase){
+				if (producto.getNombre().equals(productoMenu.getNombre())) {
+					throw new ProductoRepetidoException(productoMenu.getNombre());
 				}
-
-
+				}
 				this.menuBase.add(productoMenu);
 				linea = br.readLine();
 			}
 			br.close();
 		} 
 		catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 
 		}
