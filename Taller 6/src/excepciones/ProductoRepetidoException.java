@@ -1,17 +1,17 @@
 package excepciones;
 
-import procesamiento.Producto;
 
-public class ProductoRepetidoException extends HamburguesaException {
-    private Producto item;
-    public ProductoRepetidoException(Producto item){
-        this.item= item;
+
+public class ProductoRepetidoException extends HamburguesaException{
+    private String repetido;
+
+    public ProductoRepetidoException(String repetido) {
+        super("Fallo: El producto '" + repetido+ "' aparece al menos dos veces.");
+        this.repetido = repetido;
     }
-    
-    
-    @Override
-    public String getMessage(){
-        return "El producto " +item.getNombre()+" ha aparecido al menos dos veces";
+
+    public String getRepetido() {
+        return this.repetido;
     }
 }
 

@@ -3,6 +3,8 @@ package procesamiento;
 import java.io.File;
 import java.util.ArrayList;
 
+import excepciones.PrecioPedidoException;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -24,8 +26,11 @@ public class Pedido {
     public int getIdPedido(){
         return this.idPedido;
     }
-    public void agregarProducto(Producto nuevoItem){
+    public void agregarProducto(Producto nuevoItem) throws PrecioPedidoException{
         itemsPedido.add(nuevoItem);
+        if (getPrecioNetoPedido()>150000){
+            throw new PrecioPedidoException(getPrecioNetoPedido());
+        }
         numeroPedidos=itemsPedido.size();
     }
 
