@@ -1,7 +1,6 @@
 package procesamiento;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import excepciones.IngredienteRepetidoException;
 import excepciones.ProductoRepetidoException;
@@ -28,7 +27,7 @@ public class Restaurante {
 
 	}
 	public void cerrarYGuardarPedido ()  throws IOException{
-		File archivoAGuardar = new File("./Hamburguesas/data/" + pedidoEnCurso.getIdPedido()+".txt");
+		File archivoAGuardar = new File("./Taller 6/data/" + pedidoEnCurso.getIdPedido()+".txt");
 		
 		
 		pedidoEnCurso.guardarFactura(archivoAGuardar);
@@ -94,17 +93,17 @@ public class Restaurante {
 	private void cargarIngredientes (File archivoIngredientes) throws IOException, IngredienteRepetidoException{
 		try (BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes))) {
 			String linea = br.readLine();
-			HashSet<String> nombres = new HashSet<String>();
+			
 			while (linea!=null){
 				String[] informacionLinea = linea.split(";"); 
 				String nombre = informacionLinea[0]; 
 				int precio = Integer.parseInt(informacionLinea[1]);
 				Ingrediente ingrediente = new Ingrediente(nombre,precio);
-						
-				if (nombres.contains(ingrediente.getNombre())) {
+				for (Ingrediente ingredienteEnRevision: this.Ingredientes){
+				if (ingredienteEnRevision.getNombre().equals(ingrediente.getNombre())) {
 						throw new IngredienteRepetidoException(ingrediente.getNombre());
 				}
-				nombres.add(ingrediente.getNombre());
+				}
 				this.Ingredientes.add(ingrediente);
 				linea = br.readLine();
 				}
@@ -119,18 +118,16 @@ public class Restaurante {
 	private void cargarMenu (File archivoMenu) throws IOException, ProductoRepetidoException {
 		try (BufferedReader br = new BufferedReader(new FileReader(archivoMenu))) {
 			String linea = br.readLine();
-			HashSet<String> nombres = new HashSet<String>();
 			while (linea!=null){
 				String[] informacionLinea = linea.split(";"); 
 				String nombre = informacionLinea[0]; 
 				int precio = Integer.parseInt(informacionLinea[1]);
 				ProductoMenu productoMenu = new ProductoMenu(nombre,precio);
-
-				if (nombres.contains(productoMenu.getNombre())){
+				for (ProductoMenu producto : this.menuBase){
+				if (producto.getNombre().equals(productoMenu.getNombre())) {
 					throw new ProductoRepetidoException(productoMenu.getNombre());
 				}
-
-				nombres.add(productoMenu.getNombre());
+				}
 				this.menuBase.add(productoMenu);
 				linea = br.readLine();
 			}

@@ -29,7 +29,7 @@ public class Pedido {
     public void agregarProducto(Producto nuevoItem) throws PrecioPedidoException{
         itemsPedido.add(nuevoItem);
         if (getPrecioNetoPedido()>150000){
-            throw new PrecioPedidoException(getPrecioNetoPedido());
+            throw new PrecioPedidoException(getPrecioNetoPedido(), nuevoItem);
         }
         numeroPedidos=itemsPedido.size();
     }

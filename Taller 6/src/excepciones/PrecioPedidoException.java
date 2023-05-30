@@ -1,10 +1,19 @@
 package excepciones;
 
+import procesamiento.Producto;
+
 public class PrecioPedidoException extends Exception{
-    public PrecioPedidoException(int precio){
-            super("Fallo: El pedido excede el maximo permitido, con un total de '" + precio+ "' pesos.");
+    Producto excede;
+    
+    public PrecioPedidoException(int precio, Producto excede){
+            super("Fallo: El pedido excede el maximo permitido, con un total de '" + precio+ "' pesos." + obtenerInformacion(excede));
+            this.excede = excede;
             
         }
+
+    public static String obtenerInformacion(Producto excede){
+        return "\n\nINFORMACION PRODUCTO QUE EXCEDE:\nProducto:  " + excede.getNombre() + " \nPrecio: " + excede.getPrecio()+"\n";
     }
-    
+
+}
 
