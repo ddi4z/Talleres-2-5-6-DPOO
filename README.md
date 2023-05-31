@@ -1,5 +1,14 @@
 # Taller-5-DPOO
 
+Se recomienda clonar el repositorio y luego importar unicamente la carpeta correspondiente en eclipse.
+
+## Daniel Felipe Diaz Moreno
+Diseño y programación O.O 
+Sección 6
+
+
+# Taller-5-DPOO
+
 ## Daniel Felipe Diaz Moreno
 Diseño y programación O.O 
 Sección 6
