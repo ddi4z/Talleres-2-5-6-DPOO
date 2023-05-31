@@ -58,7 +58,7 @@ public class Aplicacion {
 					System.out.println("\n" + "Cargar archivos del Restaurante" + "\n");
 			
 					File archivoMenu = new File("./taller6/data/menu.txt");
-					File archivoIngrediente = new File("./taller6/data/ingredientes.txt");
+					File archivoIngrediente = new File("./Taller 6/data/ingredientes.txt");
 					File archivoCombo = new File("./taller6/data/combos.txt");
 					File archivoBebida = new File("./taller6/data/bebidas.txt");
 					restaurante.cargarInformacionRestaurante(archivoIngrediente,archivoMenu,archivoCombo,archivoBebida);

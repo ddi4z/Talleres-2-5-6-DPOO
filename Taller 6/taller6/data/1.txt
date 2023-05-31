@@ -1,0 +1,5 @@
+nombre: Pepe
+direccion: asdas
+valor neto: 0
+valor IVA: 0
+valor total: 0
