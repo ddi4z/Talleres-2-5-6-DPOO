@@ -1,5 +1,11 @@
-nombre: Daniel Cristancho
-direccion: Kra 1 Este
-valor neto: 0
-valor IVA: 0
-valor total: 0
+nombre: pEPE
+direccion: 1
+valor neto: 17550
+valor IVA: 3334
+valor total: 20884
+
+----------------------------------
+nombre: combo corral
+Precio Total: 17550
+corral
+papas medianas

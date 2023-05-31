@@ -27,7 +27,7 @@ public class Restaurante {
 
 	}
 	public void cerrarYGuardarPedido ()  throws IOException{
-		File archivoAGuardar = new File("./taller6/data/" + pedidoEnCurso.getIdPedido()+".txt");
+		File archivoAGuardar = new File("./data/" + pedidoEnCurso.getIdPedido()+".txt");
 		
 		
 		pedidoEnCurso.guardarFactura(archivoAGuardar);

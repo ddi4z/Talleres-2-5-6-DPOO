@@ -57,10 +57,10 @@ public class Aplicacion {
 
 					System.out.println("\n" + "Cargar archivos del Restaurante" + "\n");
 			
-					File archivoMenu = new File("./taller6/data/menu.txt");
-					File archivoIngrediente = new File("./taller6/data/ingredientes.txt");
-					File archivoCombo = new File("./taller6/data/combos.txt");
-					File archivoBebida = new File("./taller6/data/bebidas.txt");
+					File archivoMenu = new File("./data/menu.txt");
+					File archivoIngrediente = new File("./data/ingredientes.txt");
+					File archivoCombo = new File("./data/combos.txt");
+					File archivoBebida = new File("./data/bebidas.txt");
 					restaurante.cargarInformacionRestaurante(archivoIngrediente,archivoMenu,archivoCombo,archivoBebida);
 					
 					System.out.println("Se cargó el archivo " + archivoMenu + " con información de los menus.");
