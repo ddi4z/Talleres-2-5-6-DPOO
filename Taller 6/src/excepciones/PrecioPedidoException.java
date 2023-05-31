@@ -6,7 +6,7 @@ public class PrecioPedidoException extends Exception{
     Producto excede;
     
     public PrecioPedidoException(int precio, Producto excede){
-            super("Fallo: El pedido excede el maximo permitido, con un total de '" + precio+ "' pesos." + obtenerInformacion(excede));
+            super("\nFallo: El pedido excede el maximo permitido, con un total de '" + precio+ "' pesos." + obtenerInformacion(excede));
             this.excede = excede;
             
         }
