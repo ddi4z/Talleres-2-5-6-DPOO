@@ -1,15 +1,20 @@
 package test;
 
-import java.io.File;
-import java.io.FileWriter;
+
+import static org.junit.Assert.assertThrows;
+
+
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 import excepciones.PrecioPedidoException;
+import junit.framework.TestCase;
 import procesamiento.Pedido;
 import procesamiento.Producto;
 import procesamiento.ProductoMenu;
 
-public class PedidoTest {
+public class PedidoTest extends TestCase{
     private int precioNetoPedido;
     private int precioIVAPedido;
     private int precio;
@@ -21,7 +26,7 @@ public class PedidoTest {
     private Pedido pedido = new Pedido(nombreCliente, direccionCliente);
 
 
-    private int getPrecioPedidoTest(){
+    private void getPrecioPedidoTest(){
         for (int i = 0; i<itemsPedido.size() ;i++){
             precioNetoPedido+=itemsPedido.get(i).getPrecio();
         }
@@ -36,12 +41,12 @@ public class PedidoTest {
         itemsPedido.add(nuevoItem); 
         pedido.agregarProducto(nuevoItem);
         if (precioNetoPedido>150000){
-            assertThrows(PrecioPedidoException.class, pedido.agregarProducto(nuevoItem) )
+        	assertThrows(PrecioPedidoException.class, () -> pedido.agregarProducto(nuevoItem));
         }
         numeroPedidos=itemsPedido.size();
     }
 
-
+    @Test
     public void comprobar (){
         
         StringBuilder sb = new StringBuilder();
@@ -54,9 +59,9 @@ public class PedidoTest {
         for (int i = 0; i<itemsPedido.size() ;i++){
             sb.append("\n"+itemsPedido.get(i).generarTextoFactura());
         }
-        assertEquals(sb.toString(),pedido.generarTextoFactura());
+        assertEquals(sb.toString(),this.pedido.generarTextoFactura());
 
     }
-
+}
 
 

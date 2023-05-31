@@ -1,13 +1,19 @@
 package test;
 
+
+
 import java.util.ArrayList;
 
-import javax.swing.event.ListDataEvent;
+
+
+import org.junit.Test;
+
+import junit.framework.TestCase;
 import procesamiento.Ingrediente;
 import procesamiento.ProductoAjustado;
 import procesamiento.ProductoMenu;
 
-public class ProductoAjustadoTest {
+public class ProductoAjustadoTest extends TestCase {
     public ArrayList<Ingrediente> agregados = new ArrayList<Ingrediente>();
 	public ArrayList<Ingrediente> eliminados = new ArrayList<Ingrediente>();
     public ArrayList<String> listaIngredientes = new ArrayList<String>();
@@ -33,10 +39,8 @@ public class ProductoAjustadoTest {
         
     }
 
-/*     Debido a la forma de la clase, el test utilizado sera de integracion, y se evaluara size
-    se agregan y eliminan los ingredientes y si el texto generado es igual al esperado */
-
-    public String generarTextoFacturaTest () {
+	@Test
+    public void generarTextoFacturaTest () {
         listaIngredientes.add("lechuga");
         listaIngredientes.add("tomate");
         listaIngredientes.add("cebolla");

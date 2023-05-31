@@ -1,11 +1,16 @@
 package test;
 
+
+
 import java.util.ArrayList;
 
+import org.junit.Test;
+
+import junit.framework.TestCase;
 import procesamiento.Combo;
 import procesamiento.ProductoMenu;
 
-public class ComboTest {
+public class ComboTest extends TestCase{
         private String nombreCombo;
         private double descuento; 
         private ArrayList<ProductoMenu> itemsCombo = new ArrayList<ProductoMenu>();
@@ -26,7 +31,7 @@ public class ComboTest {
             precio= (int) (precio-(precio*(descuento/100)));
         }
 
-
+        @Test
         public void generarTextoFacturaTest() {
 
             agregarItemAComboTest();

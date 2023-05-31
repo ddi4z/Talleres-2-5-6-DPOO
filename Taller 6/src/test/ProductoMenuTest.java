@@ -1,12 +1,20 @@
 package test;
+import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
 import java.util.stream.Stream;
 
-import junit.framework.TestCase;
+
+
 import procesamiento.ProductoMenu;
 
-public class ProductoMenuTest {
+public class ProductoMenuTest extends TestCase {
     @ParameterizedTest
     @MethodSource("parametrosGenerarTextoFactura")
+	@Test
     public void generarTextoFacturaText(String nombre, int precio, String resultadoEsperado) {
     ProductoMenu producto= new ProductoMenu(nombre, precio);
 		assertEquals( resultadoEsperado,producto.generarTextoFactura());
