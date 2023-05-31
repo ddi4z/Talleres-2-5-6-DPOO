@@ -1,4 +1,4 @@
-# Taller-5-DPOO
+# Taller-6-DPOO
 
 Se recomienda clonar el repositorio y luego importar unicamente la carpeta correspondiente en eclipse.
 
