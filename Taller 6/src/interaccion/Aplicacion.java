@@ -249,7 +249,7 @@ public class Aplicacion {
 						
 							if (pedidos.get(i).getIdPedido()== (id)){
 								forActivo=false;
-								File archivo = new File("./Taller 6/data/" + id+".txt");
+								File archivo = new File("./data/" + id+".txt")
 								try {
 									Desktop.getDesktop().open(archivo);
 								} catch (IOException e) {
