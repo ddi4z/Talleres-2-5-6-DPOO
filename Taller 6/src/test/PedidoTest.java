@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThrows;
 import java.util.ArrayList;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import excepciones.PrecioPedidoException;
 import junit.framework.TestCase;
@@ -14,13 +15,12 @@ import procesamiento.Pedido;
 import procesamiento.Producto;
 import procesamiento.ProductoMenu;
 
-public class PedidoTest extends TestCase{
+public class PedidoTest{
     private int precioNetoPedido;
     private int precioIVAPedido;
     private int precio;
     private ArrayList<Producto> itemsPedido = new ArrayList<Producto>();
     private static int numeroPedidos = 0;
-    private int idPedido;
     private String nombreCliente;
     private String direccionCliente;
     private Pedido pedido = new Pedido(nombreCliente, direccionCliente);
@@ -47,8 +47,9 @@ public class PedidoTest extends TestCase{
     }
 
     @Test
-    public void comprobar (){
-        
+    public void comprobar () throws PrecioPedidoException{
+    	agregarProductoTest();
+    	getPrecioPedidoTest();
         StringBuilder sb = new StringBuilder();
         sb.append("nombre: "+nombreCliente);
         sb.append("\ndireccion: "+direccionCliente);
@@ -59,7 +60,7 @@ public class PedidoTest extends TestCase{
         for (int i = 0; i<itemsPedido.size() ;i++){
             sb.append("\n"+itemsPedido.get(i).generarTextoFactura());
         }
-        assertEquals(sb.toString(),this.pedido.generarTextoFactura());
+        Assertions.assertEquals(sb.toString(),this.pedido.generarTextoFactura());
 
     }
 }

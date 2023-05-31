@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import junit.framework.TestCase;
 import procesamiento.Ingrediente;
 import procesamiento.ProductoAjustado;
 import procesamiento.ProductoMenu;
 
-public class ProductoAjustadoTest extends TestCase {
+public class ProductoAjustadoTest{
     public ArrayList<Ingrediente> agregados = new ArrayList<Ingrediente>();
 	public ArrayList<Ingrediente> eliminados = new ArrayList<Ingrediente>();
     public ArrayList<String> listaIngredientes = new ArrayList<String>();
@@ -60,6 +61,6 @@ public class ProductoAjustadoTest extends TestCase {
 		for (int i = 0; i<eliminados.size() ;i++){
 			sb.append("\nnombre: "+ eliminados.get(i).getNombre()+" valor: "+ 0);
 		}
-        assertEquals( sb.toString(),productoAjustado.generarTextoFactura());
+		Assertions.assertEquals( sb.toString(),productoAjustado.generarTextoFactura());
 	}
 }
